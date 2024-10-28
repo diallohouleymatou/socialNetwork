@@ -64,4 +64,11 @@ class UserController extends Controller
         return redirect('/login');
     }
 
+    public function search(Request $request){
+    $users =User::where('username','LIKE','%'.$request->search.'%')->get();
+    return view('Results',compact('users'));
+
+
+    }
+
 }
