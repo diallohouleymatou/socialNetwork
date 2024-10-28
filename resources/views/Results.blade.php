@@ -43,7 +43,11 @@
                         <div>
                             <strong>{{ $user->prenom . ' ' . $user->nom }}</strong>
                             <span class="username">{{"@".$user->username }}</span>
-                            <a href="#" class="btn btn-info btn-follow">Suivre</a>
+                           <form action="{{route('follow',$user)}}" method="post">
+                            @csrf
+                            <button type="submit" class ="btn btn-info">Follow</button>
+                           </form>
+
                         </div>
                     </li>
                 @endforeach

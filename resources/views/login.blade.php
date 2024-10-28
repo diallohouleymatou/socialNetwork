@@ -27,7 +27,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Se connecter</button>
         </form>
-        <p class="mt-3">Pas encore inscrit ? <a href="register.html">Inscrivez-vous ici</a>.</p>
+        <p class="mt-3">Pas encore inscrit ? <a href="/register">Inscrivez-vous ici</a>.</p>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
