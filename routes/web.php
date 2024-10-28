@@ -8,6 +8,6 @@ use App\Http\Controllers\UserController;
  Route::get('/dashboard',[UserController::class,'dashboard'])->name('dashboard')->middleware('auth');
  Route::get('/feed',[UserController::class,'feed'])->name('feed')->middleware('auth');
  Route::get('/deconnexion',[UserController::class,'deconnexion'])->name('deconnexion')->middleware('auth');
- Route::get('/results',[UserController::class,'search'])->name('search')->middleware('auth');
+ Route::post('/results',[UserController::class,'search'])->name('search')->middleware('auth');
 
 
