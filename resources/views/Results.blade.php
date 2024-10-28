@@ -42,7 +42,7 @@
                     <li class="list-group-item user-card">
                         <div>
                             <strong>{{ $user->prenom . ' ' . $user->nom }}</strong>
-                            <span class="username">(@{{ $user->username }})</span>
+                            <span class="username">{{"@".$user->username }}</span>
                             <a href="#" class="btn btn-info btn-follow">Suivre</a>
                         </div>
                     </li>
