@@ -37,7 +37,7 @@
     <div class="container mt-5">
         <h1 class="text-center">Liste d'Utilisateurs</h1>
         <ul class="list-group">
-            @if($users)
+            @if($users->isNotEmpty())
                 @foreach($users as $user)
                     <li class="list-group-item user-card">
                         <div>

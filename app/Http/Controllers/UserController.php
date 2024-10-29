@@ -65,10 +65,7 @@ class UserController extends Controller
     }
 
     public function search(Request $request){
-    $users =User::where('username','LIKE','%'.$request->search.'%',)->get();
-    return view('Results',compact('users'));
-
-
+        $users = User::where('username','LIKE','%'.$request->search.'%')->where('id','!=',Auth::user()->id)->get();
+        return view('Results',compact('users'));
     }
-
 }
