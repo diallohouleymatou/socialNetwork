@@ -33,6 +33,7 @@
         }
     </style>
 </head>
+@include('layouts.navbar')
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Liste d'Utilisateurs</h1>
