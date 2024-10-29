@@ -11,5 +11,6 @@ use App\Http\Controllers\UserController;
  Route::get('/deconnexion',[UserController::class,'deconnexion'])->name('deconnexion')->middleware('auth');
  Route::any('/results',[UserController::class,'search'])->name('search')->middleware('auth');
  Route::post('/follow/{user}',[FollowController::class,'follow'])->name('follow')->middleware('auth');
+ Route::post('/unfollow/{user}',[FollowController::class,'unfollow'])->name('unfollow')->middleware('auth');
 
 

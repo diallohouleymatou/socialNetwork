@@ -43,10 +43,18 @@
                         <div>
                             <strong>{{ $user->prenom . ' ' . $user->nom }}</strong>
                             <span class="username">{{"@".$user->username }}</span>
-                           <form action="{{route('follow',$user)}}" method="post">
-                            @csrf
-                            <button type="submit" class ="btn btn-info">Follow</button>
-                           </form>
+                            <!-- if(!$user->followers->contains(Auth::user()->id))-->
+                            @if (!Auth::user()->following->contains($user->id))
+                                <form action="{{route('follow',$user)}}" method="post">
+                                    @csrf
+                                    <button type="submit" class ="btn btn-info">Follow</button>
+                               </form>
+                            @else
+                                <form action="{{route('unfollow',$user)}}" method="post">
+                                    @csrf
+                                    <button type="submit" class ="btn btn-info">Unfollow</button>
+                                </form>
+                            @endif
 
                         </div>
                     </li>
