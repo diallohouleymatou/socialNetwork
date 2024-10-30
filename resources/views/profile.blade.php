@@ -39,8 +39,15 @@
 <body>
     <div class="container mt-5">
         <header class="text-center mb-4">
-            <h1>Profil de <span id="username">Alice</span></h1>
+            <h1>Profil de <span id="username">{{ Auth::user()->prenom }}</span></h1>
         </header>
+
+        <!-- Message de succès -->
+        @if(session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <section class="profile-info mb-4">
             <div class="row">
@@ -49,12 +56,12 @@
                 </div>
                 <div class="col-md-9">
                     <h2>Informations</h2>
-                    <p><strong>Email :</strong>{{Auth::user()->email}} </p>
-                    <p><strong>Bio :</strong>{{Auth::user()->bio}}</p>
+                    <p><strong>Email :</strong> {{ Auth::user()->email }}</p>
+                    <p><strong>Bio :</strong> {{ Auth::user()->bio }}</p>
                     <p><strong>Localisation :</strong> Paris, France</p>
-                    <p><strong>Followers :</strong>{{Auth::user()->followers->count()}}</p>
-                    <p><strong>Following :</strong>{{Auth::user()->following->count()}}</p>
-                    <a href="edit-profile.html" class="btn btn-secondary">Modifier le Profil</a>
+                    <p><strong>Followers :</strong> {{ Auth::user()->followers->count() }}</p>
+                    <p><strong>Following :</strong> {{ Auth::user()->following->count() }}</p>
+                    <a href="{{ route('edit') }}" class="btn btn-secondary">Modifier le Profil</a>
                     <a href="change-password.html" class="btn btn-warning">Changer le Mot de Passe</a>
                 </div>
             </div>

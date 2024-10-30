@@ -14,5 +14,8 @@ use App\Http\Controllers\UserController;
  Route::post('/follow/{user}',[FollowController::class,'follow'])->name('follow')->middleware('auth');
  Route::post('/unfollow/{user}',[FollowController::class,'unfollow'])->name('unfollow')->middleware('auth');
  Route::any('/profile',[UserController::class,'profile'])->name('profile')->middleware('auth');
+ Route::any('/edit',[UserController::class,'edit'])->name('edit')->middleware('auth');
+
+
 
 

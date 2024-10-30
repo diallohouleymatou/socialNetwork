@@ -72,4 +72,33 @@ class UserController extends Controller
     public function profile(){
         return view('profile');
     }
+
+    public function edit(Request $request){
+        if($request->isMethod('put')){
+            $requestValide = $request->validate([
+                'username'=>"min:3|required",
+                'prenom'=>"min:4|required",
+                'nom'=>"min:2|required",
+                'email'=>"email|required",
+                'bio'=>"required",
+
+            ]);
+        $current = Auth::user();
+        $user = User::where('username',$requestValide['username'])->first();
+        if(!$user||$current->username == $requestValide['username']){
+            $current->username = $requestValide['username'];
+            $current->prenom = $requestValide['prenom'];
+            $current->nom = $requestValide['nom'];
+            $current->email = $requestValide['email'];
+            $current->bio = $requestValide['bio'];
+            $current->save();
+            return redirect('/profile')->with('success','profil mis a jour avec succes');
+        }
+
+        }
+
+        return view('edit');
+    }
+
+
 }
