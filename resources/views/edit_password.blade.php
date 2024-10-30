@@ -37,7 +37,8 @@
             </div>
         @endif
 
-        <form action="{{ route('update-password') }}" method="POST">
+        <form action="{{ route('edit_password') }}" method="POST">
+            @method('put')
             @csrf
             <div class="form-group">
                 <label for="current_password">Mot de Passe Actuel</label>
