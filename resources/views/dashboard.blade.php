@@ -18,7 +18,7 @@
     @include('layouts.navbar')
     <div class="container mt-4">
         <h2>Tableau de Bord</h2>
-        
+
         <div class="row">
             <div class="col-md-4 dashboard-card">
                 <div class="card">
@@ -46,6 +46,15 @@
                         <h5 class="card-title">Messages</h5>
                         <p class="card-text">Consultez vos messages récents.</p>
                         <a href="#" class="btn btn-primary">Voir les messages</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 dashboard-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Profil</h5>
+                        <p class="card-text">Voir votre profil</p>
+                        <a href="{{route('profile')}}" class="btn btn-primary">Profil</a>
                     </div>
                 </div>
             </div>

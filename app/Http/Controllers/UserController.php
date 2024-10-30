@@ -68,4 +68,8 @@ class UserController extends Controller
         $users = User::where('username','LIKE','%'.$request->search.'%')->where('id','!=',Auth::user()->id)->get();
         return view('Results',compact('users'));
     }
+
+    public function profile(){
+        return view('profile');
+    }
 }
