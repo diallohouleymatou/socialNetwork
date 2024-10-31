@@ -62,7 +62,7 @@
                     <p><strong>Followers :</strong> {{ Auth::user()->followers->count() }}</p>
                     <p><strong>Following :</strong> {{ Auth::user()->following->count() }}</p>
                     <a href="{{ route('edit') }}" class="btn btn-secondary">Modifier le Profil</a>
-                    <a href="change-password.html" class="btn btn-warning">Changer le Mot de Passe</a>
+                    <a href="{{route('edit_password')}}" class="btn btn-warning">Changer le Mot de Passe</a>
                 </div>
             </div>
         </section>

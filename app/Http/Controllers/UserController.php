@@ -101,5 +101,23 @@ class UserController extends Controller
         return view('edit');
     }
 
+    public function edit_password(Request $request){
+       if($request->isMethod('put')){
+        $requestValide = $request->validate([
+            "current_password"=>"min:6|required",
+            "new_password"=>"min:6|confirmed|required",
+        ]);
+        $current = Auth::user();
+        if(Hash::check($requestValide['current_password'],$current->password)){
+            $current->password = Hash::make($requestValide['new_password']);
+            $current->save();
+            return redirect ('/profile')->with('success','Mot de pass mis a jour avec success');
+        }
+
+
+       }
+    return view('edit_password');
+    }
+
 
 }
