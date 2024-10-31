@@ -94,6 +94,7 @@ class UserController extends Controller
             $current->save();
             return redirect('/profile')->with('success','profil mis a jour avec succes');
         }
+            return redirect('/edit')->with('error',"erreur nom d'utilisateur");
 
         }
 
