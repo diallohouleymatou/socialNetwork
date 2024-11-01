@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Like;
+use App\Models\Commentaire;
 use Illuminate\Database\Eloquent\Model;
 
 class Publication extends Model
@@ -21,5 +22,10 @@ class Publication extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
     }
 }

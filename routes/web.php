@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\PublicationController;
 
  Route::any('/register',[UserController::class,'register'])->name('register')->middleware('guest');
@@ -21,6 +22,7 @@ use App\Http\Controllers\PublicationController;
  Route::any('/publication',[PublicationController::class,'publication'])->name('publication')->middleware('auth');
  Route::any('/like/{id}',[LikeController::class,'like'])->name('like')->middleware('auth');
  Route::any('/unlike/{id}',[LikeController::class,'unlike'])->name('unlike')->middleware('auth');
+ Route::any('/comment/{id}',[CommentaireController::class,'comments'])->name('comments')->middleware('auth');
 
 
 
