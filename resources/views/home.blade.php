@@ -35,10 +35,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Connexion</a>
+                        <a class="nav-link" href="/login">Connexion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.html">Inscription</a>
+                        <a class="nav-link" href="/register">Inscription</a>
                     </li>
                 </ul>
             </div>

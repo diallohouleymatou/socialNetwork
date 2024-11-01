@@ -18,6 +18,11 @@
     </style>
 </head>
 <body>
+    @if(session('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('error') }}
+    </div>
+@endif
     <div class="container mt-5">
         <h1>Modifier le Profil</h1>
         <form  method="POST" action="{{route('edit')}}">

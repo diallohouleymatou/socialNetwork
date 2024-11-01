@@ -21,6 +21,10 @@
     </style>
 </head>
 <body>
+    @if(session('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('error') }}
+    </div>
     <div class="container mt-5">
         <header class="text-center mb-4">
             <h1>Changer le Mot de Passe</h1>
