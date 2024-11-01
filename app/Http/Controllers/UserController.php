@@ -117,6 +117,5 @@ class UserController extends Controller
        }
     return view('edit_password');
     }
-
-
+   
 }

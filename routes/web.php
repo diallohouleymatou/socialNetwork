@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\FollowController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PublicationController;
 
  Route::any('/register',[UserController::class,'register'])->name('register')->middleware('guest');
  Route::any('/login',[UserController::class,'login'])->name('login')->middleware('guest');
@@ -16,6 +17,7 @@ use App\Http\Controllers\UserController;
  Route::any('/profile',[UserController::class,'profile'])->name('profile')->middleware('auth');
  Route::any('/edit',[UserController::class,'edit'])->name('edit')->middleware('auth');
  Route::any('/edit_password',[UserController::class,'edit_password'])->name('edit_password')->middleware('auth');
+ Route::any('/publication',[PublicationController::class,'publication'])->name('publication')->middleware('auth');
 
 
 

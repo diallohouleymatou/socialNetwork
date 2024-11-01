@@ -8,18 +8,20 @@
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
         }
         .container {
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            margin-top: 50px;
         }
         .profile-pic {
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            border: 3px solid #007bff;
+            width: 120px;
+            height: 120px;
+            border: 4px solid #007bff;
         }
         .post {
             border: 1px solid #ddd;
@@ -27,17 +29,33 @@
             padding: 15px;
             margin-bottom: 10px;
             background-color: #f1f1f1;
+            transition: background-color 0.3s;
+        }
+        .post:hover {
+            background-color: #e9ecef;
         }
         h1, h2 {
             color: #343a40;
         }
-        button {
-            margin-right: 10px;
+        .btn-like {
+            color: #007bff;
+        }
+        .btn-comment {
+            color: #28a745;
+        }
+        .comment-section {
+            margin-top: 10px;
+        }
+        .comment {
+            margin-top: 5px;
+            padding: 5px;
+            background-color: #ffffff;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container">
         <header class="text-center mb-4">
             <h1>Profil de <span id="username">{{ Auth::user()->prenom }}</span></h1>
         </header>
@@ -69,24 +87,31 @@
 
         <section class="posts mb-4">
             <h2>Mes Publications</h2>
-            <div class="post">
-                <p>Ceci est ma première publication !</p>
-            </div>
-            <div class="post">
-                <p>Aujourd'hui, j'ai appris à utiliser Bootstrap pour créer des pages web.</p>
-            </div>
-            <div class="post">
-                <p>Excité pour mon prochain projet de développement web !</p>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Quoi de neuf ?" rows="3"></textarea>
-            </div>
-            <button class="btn btn-primary">Ajouter Publication</button>
+            @if (auth::user()->publications)
+                @foreach (auth::user()->publications as $post)
+                    <div class="post">
+                        <p>{{ $post->texte }}</p>
+                        <button class="btn btn-like">❤️ J'aime</button>
+                        <button class="btn btn-comment" data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>
+
+                        <div id="commentSection{{ $post->id }}" class="collapse comment-section">
+                            <form action="{{}}" method="POST">
+                                @csrf
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" name="comment" placeholder="Ajouter un commentaire" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" type="submit">Envoyer</button>
+                                    </div>
+                                </div>
+                            </form>
+                                <div class="comment"></div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <p>Vous n'avez rien publié</p>
+            @endif
         </section>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

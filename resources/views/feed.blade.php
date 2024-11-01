@@ -6,6 +6,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Feed - Mon Réseau Social</title>
     <style>
+
+
+        .post-container {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .post-button {
+            margin-top: 15px;
+        }
+
         body {
             background-color: #f8f9fa;
         }
@@ -28,6 +42,7 @@
     @include('layouts.navbar')
     <div class="container mt-4">
         <h2>Fil d'Actualités</h2>
+        @include('publication')
 
         <div class="post">
             <div class="post-header">
