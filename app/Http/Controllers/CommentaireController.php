@@ -10,16 +10,11 @@ class CommentaireController extends Controller
 {
     public function comments(Request $request, $id)
     {
-
         $post = Publication::findOrFail($id);
-        if($request->isMethod('post'))
-        {
             $post->commentaires()->create([
                 'contenu'=>$request->contenu,
                 'user_id'=>Auth::user()->id,
             ]);
-            return back();
-        }
         return back();
     }
 }

@@ -17,11 +17,39 @@
             padding: 30px;
             margin-top: 50px;
         }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         .profile-pic {
             border-radius: 50%;
             width: 120px;
             height: 120px;
             border: 4px solid #007bff;
+            transition: transform 0.3s;
+        }
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+        .profile-info {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .profile-info h2 {
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+        .profile-info p {
+            margin: 5px 0;
+        }
+        .btn-edit {
+            margin-top: 10px;
+        }
+        .posts {
+            margin-top: 30px;
         }
         .post {
             border: 1px solid #ddd;
@@ -34,14 +62,13 @@
         .post:hover {
             background-color: #e9ecef;
         }
-        h1, h2 {
-            color: #343a40;
+        .likes-comments {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
         }
-        .btn-like {
-            color: #007bff;
-        }
-        .btn-comment {
-            color: #28a745;
+        .btn-like, .btn-comment {
+            margin-right: 10px;
         }
         .comment-section {
             margin-top: 10px;
@@ -52,13 +79,21 @@
             background-color: #ffffff;
             border-radius: 3px;
         }
+        .comment-meta {
+            font-size: 12px;
+            color: #666;
+        }
+        .comment-content {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     @include('layouts.navbar')
     <div class="container">
-        <header class="text-center mb-4">
+        <header class="profile-header">
             <h1>Profil de <span id="username">{{ Auth::user()->prenom }}</span></h1>
+            <img src="profile-pic.jpg" alt="Photo de Profil" class="profile-pic">
         </header>
 
         <!-- Message de succès -->
@@ -69,21 +104,14 @@
         @endif
 
         <section class="profile-info mb-4">
-            <div class="row">
-                <div class="col-md-3 text-center">
-                    <img src="profile-pic.jpg" alt="Photo de Profil" class="profile-pic">
-                </div>
-                <div class="col-md-9">
-                    <h2>Informations</h2>
-                    <p><strong>Email :</strong> {{ Auth::user()->email }}</p>
-                    <p><strong>Bio :</strong> {{ Auth::user()->bio }}</p>
-                    <p><strong>Localisation :</strong> Paris, France</p>
-                    <p><strong>Followers :</strong> {{ Auth::user()->followers->count() }}</p>
-                    <p><strong>Following :</strong> {{ Auth::user()->following->count() }}</p>
-                    <a href="{{ route('edit') }}" class="btn btn-secondary">Modifier le Profil</a>
-                    <a href="{{route('edit_password')}}" class="btn btn-warning">Changer le Mot de Passe</a>
-                </div>
-            </div>
+            <h2>Informations</h2>
+            <p><strong>Email :</strong> {{ Auth::user()->email }}</p>
+            <p><strong>Bio :</strong> {{ Auth::user()->bio }}</p>
+            <p><strong>Localisation :</strong> Paris, France</p>
+            <p><strong>Followers :</strong> {{ Auth::user()->followers->count() }}</p>
+            <p><strong>Following :</strong> {{ Auth::user()->following->count() }}</p>
+            <a href="{{ route('edit') }}" class="btn btn-secondary btn-edit">Modifier le Profil</a>
+            <a href="{{route('edit_password')}}" class="btn btn-warning btn-edit">Changer le Mot de Passe</a>
         </section>
 
         <section class="posts mb-4">
@@ -93,20 +121,46 @@
                     <div class="post">
                         <h3>{{$post->user->prenom}}</h3>
                         <p>{{ $post->texte }}</p>
-                        <button class="btn btn-like">❤️ J'aime</button>
-                        <button class="btn btn-comment" data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>
+
+                        <div class="likes-comments">
+                            <span>{{ $post->likes->count() }} ❤️</span>
+                            <span class="ml-3">{{ $post->commentaires->count() }} 💬</span>
+                        </div>
+
+                        <div class="post-actions">
+                            @if(!$post->likes->contains('user_id', auth()->user()->id))
+                                <form action="{{route('like', $post->id)}}" method="post" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-link btn-like" type="submit">J'aime</button>
+                                </form>
+                            @else
+                                <form action="{{route('unlike', $post->id)}}" method="post" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-link btn-like" type="submit">Je n'aime plus</button>
+                                </form>
+                            @endif
+                            <button class="btn btn-link btn-comment" data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>
+                        </div>
 
                         <div id="commentSection{{ $post->id }}" class="collapse comment-section">
-                            <form action="{{}}" method="POST">
+                            <form action="{{route('comments', $post->id)}}" method="POST">
                                 @csrf
                                 <div class="input-group mb-2">
-                                    <input type="text" class="form-control" name="comment" placeholder="Ajouter un commentaire" required>
+                                    <input type="text" class="form-control" name="contenu" placeholder="Ajouter un commentaire" required>
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-primary" type="submit">Envoyer</button>
                                     </div>
                                 </div>
                             </form>
-                                <div class="comment"></div>
+                            <div class="comment">
+                                @foreach ($post->commentaires as $comment)
+                                    <div>
+                                        <span class="comment-content">{{ $comment->user->prenom }}:</span>
+                                        <p>{{ $comment->contenu }}</p>
+                                        <div class="comment-meta">{{ $comment->created_at->diffForHumans() }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -115,5 +169,9 @@
             @endif
         </section>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -49,7 +49,8 @@ class UserController extends Controller
     }
 
     public function home(){
-        return view('home');
+        $posts = Publication::latest()->get();
+        return view('home',compact('posts'));
     }
 
     public function dashboard(){
@@ -57,7 +58,7 @@ class UserController extends Controller
     }
 
     public function feed(){
-        $posts = Publication::all();
+        $posts = Publication::latest()->get();
         return view('feed',compact('posts'));
     }
 
