@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Like;
 use Illuminate\Database\Eloquent\Model;
 
 class Publication extends Model
@@ -15,5 +16,10 @@ class Publication extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }
 }

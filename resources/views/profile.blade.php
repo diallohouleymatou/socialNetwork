@@ -55,6 +55,7 @@
     </style>
 </head>
 <body>
+    @include('layouts.navbar')
     <div class="container">
         <header class="text-center mb-4">
             <h1>Profil de <span id="username">{{ Auth::user()->prenom }}</span></h1>
@@ -90,6 +91,7 @@
             @if (auth::user()->publications)
                 @foreach (auth::user()->publications as $post)
                     <div class="post">
+                        <h3>{{$post->user->prenom}}</h3>
                         <p>{{ $post->texte }}</p>
                         <button class="btn btn-like">❤️ J'aime</button>
                         <button class="btn btn-comment" data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>

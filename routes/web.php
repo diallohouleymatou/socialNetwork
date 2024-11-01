@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PublicationController;
@@ -18,6 +19,8 @@ use App\Http\Controllers\PublicationController;
  Route::any('/edit',[UserController::class,'edit'])->name('edit')->middleware('auth');
  Route::any('/edit_password',[UserController::class,'edit_password'])->name('edit_password')->middleware('auth');
  Route::any('/publication',[PublicationController::class,'publication'])->name('publication')->middleware('auth');
+ Route::any('/like/{id}',[LikeController::class,'like'])->name('like')->middleware('auth');
+ Route::any('/unlike/{id}',[LikeController::class,'unlike'])->name('unlike')->middleware('auth');
 
 
 

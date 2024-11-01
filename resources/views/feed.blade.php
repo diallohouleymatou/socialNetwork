@@ -44,35 +44,37 @@
         <h2>Fil d'Actualités</h2>
         @include('publication')
 
+        @foreach ($posts as $post)
         <div class="post">
-            <div class="post-header">
-                <h5>Auteur 1</h5>
-                <small>Publié le 27 Octobre 2024</small>
-            </div>
-            <p>Ceci est un exemple de post sur le réseau social. Partagez vos pensées ici !</p>
-            <button class="btn btn-link">J'aime</button>
-            <button class="btn btn-link">Commenter</button>
-        </div>
+            <h5>{{$post->user->prenom}}</h5>
+            <p>{{ $post->texte }}</p>
+            @if(!$post->likes->contains('user_id',auth()->user()->id))
+                <form action="{{route('like',$post->id)}}" method="post">
+                    @csrf
+                    <button class="btn btn-like" type="submit">{{$post->likes->count()}}♡</button>
+                </form>
+            @else
+                <form action="{{route('unlike',$post->id)}}" method="post">
+                    @csrf
+                    <button class="btn btn-like" type="submit">{{$post->likes->count()}}❤️</button>
+                </form>
+            @endif
+            <button class="btn btn-comment" data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>
 
-        <div class="post">
-            <div class="post-header">
-                <h5>Auteur 2</h5>
-                <small>Publié le 26 Octobre 2024</small>
+            <div id="commentSection{{ $post->id }}" class="collapse comment-section">
+                <form action="" method="POST">
+                    @csrf
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="comment" placeholder="Ajouter un commentaire" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="submit">Envoyer</button>
+                        </div>
+                    </div>
+                </form>
+                    <div class="comment"></div>
             </div>
-            <p>Un autre post intéressant. N'hésitez pas à réagir et à commenter !</p>
-            <button class="btn btn-link">J'aime</button>
-            <button class="btn btn-link">Commenter</button>
         </div>
-
-        <div class="post">
-            <div class="post-header">
-                <h5>Auteur 3</h5>
-                <small>Publié le 25 Octobre 2024</small>
-            </div>
-            <p>Rejoignez-nous pour discuter de sujets qui vous passionnent !</p>
-            <button class="btn btn-link">J'aime</button>
-            <button class="btn btn-link">Commenter</button>
-        </div>
+    @endforeach
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
