@@ -11,6 +11,7 @@ use App\Http\Controllers\PublicationController;
  Route::any('/login',[UserController::class,'login'])->name('login')->middleware('guest');
  Route::get('/',[UserController::class,'home'])->name('home')->middleware('guest');
  Route::get('/dashboard',[UserController::class,'dashboard'])->name('dashboard')->middleware('auth');
+ Route::get('/stats',[UserController::class,'stats'])->name('stats')->middleware('auth');
  Route::get('/feed',[UserController::class,'feed'])->name('feed')->middleware('auth');
  Route::get('/deconnexion',[UserController::class,'deconnexion'])->name('deconnexion')->middleware('auth');
  Route::any('/results',[UserController::class,'search'])->name('search')->middleware('auth');

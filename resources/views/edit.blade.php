@@ -19,38 +19,54 @@
 </head>
 <body>
     @if(session('error'))
-    <div class="alert alert-danger" role="alert">
-        {{ session('error') }}
-    </div>
-@endif
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="container mt-5">
         <h1>Modifier le Profil</h1>
-        <form  method="POST" action="{{route('edit')}}">
-            @method('put')
-
+        <form method="POST" action="{{ route('edit') }}" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
+
             <div class="form-group">
                 <label for="editUsername">Nom</label>
-                <input type="text" class="form-control" name="nom" value="{{old('nom',Auth::user()->nom)}}">
+                <input type="text" class="form-control" name="nom" value="{{ old('nom', Auth::user()->nom) }}">
             </div>
+
             <div class="form-group">
                 <label for="editUsername">Username</label>
-                <input type="text" class="form-control" name="username" value="{{old('username',Auth::user()->username)}}">
+                <input type="text" class="form-control" name="username" value="{{ old('username', Auth::user()->username) }}">
             </div>
+
             <div class="form-group">
-                <label for="editUsername">Prenom</label>
-                <input type="text" class="form-control" name="prenom" value="{{old('prenom',Auth::user()->prenom)}}">
+                <label for="editUsername">Prénom</label>
+                <input type="text" class="form-control" name="prenom" value="{{ old('prenom', Auth::user()->prenom) }}">
             </div>
+
             <div class="form-group">
                 <label for="editEmail">Email</label>
-                <input type="email" class="form-control" name="email" value="{{old('email',Auth::user()->email)}}">
+                <input type="email" class="form-control" name="email" value="{{ old('email', Auth::user()->email) }}">
             </div>
+
             <div class="form-group">
                 <label for="editBio">Bio</label>
-                <textarea class="form-control" name="bio">{{old('bio',Auth::user()->bio)}}</textarea>
+                <textarea class="form-control" name="bio">{{ old('bio', Auth::user()->bio) }}</textarea>
             </div>
+
+            <div class="form-group">
+                <label for="profile_picture">Changer la photo de profil</label>
+                <input type="file" class="form-control-file" name="profile_picture">
+            </div>
+
             <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
-            <a href="profile.html" class="btn btn-secondary">Annuler</a>
+            <a href="{{ route('profile') }}" class="btn btn-secondary">Annuler</a>
         </form>
     </div>
 

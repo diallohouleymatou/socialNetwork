@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\User;
+use App\Models\Commentaire;
 use App\Models\Publication;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -75,34 +78,64 @@ class UserController extends Controller
     public function profile(){
         return view('profile');
     }
+    public function stats()
+    {
+        $totalPosts = auth()->user()->publications()->count();
+        $totalLikes = auth()->user()->likes()->count();
+        $totalComments = auth()->user()->commentaires()->count();
+        $totalFollowers = auth()->user()->followers()->count();
 
-    public function edit(Request $request){
-        if($request->isMethod('put')){
+        return view('stats', compact(
+            'totalPosts',
+            'totalLikes',
+            'totalComments',
+            'totalFollowers'
+        ));
+    }
+
+    public function edit(Request $request)
+    {
+        if ($request->isMethod('put')) {
             $requestValide = $request->validate([
-                'username'=>"min:3|required",
-                'prenom'=>"min:4|required",
-                'nom'=>"min:2|required",
-                'email'=>"email|required",
-                'bio'=>"required",
-
+                'username' => "min:3|required",
+                'prenom' => "min:4|required",
+                'nom' => "min:2|required",
+                'email' => "email|required",
+                'bio' => "required",
+                'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
-        $current = Auth::user();
-        $user = User::where('username',$requestValide['username'])->first();
-        if(!$user||$current->username == $requestValide['username']){
-            $current->username = $requestValide['username'];
-            $current->prenom = $requestValide['prenom'];
-            $current->nom = $requestValide['nom'];
-            $current->email = $requestValide['email'];
-            $current->bio = $requestValide['bio'];
-            $current->save();
-            return redirect('/profile')->with('success','profil mis a jour avec succes');
-        }
-            return redirect('/edit')->with('error',"erreur nom d'utilisateur");
 
+            $current = Auth::user();
+
+            $user = User::where('username', $requestValide['username'])->first();
+            if (!$user || $current->username == $requestValide['username']) {
+
+                $current->username = $requestValide['username'];
+                $current->prenom = $requestValide['prenom'];
+                $current->nom = $requestValide['nom'];
+                $current->email = $requestValide['email'];
+                $current->bio = $requestValide['bio'];
+
+                if ($request->hasFile('profile_picture')) {
+                    $file = $request->file('profile_picture');
+                    $filename = time() . '.' . $file->getClientOriginalExtension();
+                    $file->storeAs('public/profile_pictures', $filename);
+
+                    $current->photo = 'profile_pictures/' . $filename;
+                }
+
+                $current->save();
+
+                return redirect('/profile')->with('success', 'Profil mis à jour avec succès');
+            }
+
+            return redirect('/edit')->with('error', "Erreur : Nom d'utilisateur déjà utilisé");
         }
 
         return view('edit');
     }
+
+
 
     public function edit_password(Request $request){
        if($request->isMethod('put')){
