@@ -8,61 +8,114 @@
     <style>
         body {
             background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
         }
+        .container {
+            max-width: 800px;
+        }
+
+        /* Post Container */
         .post-container {
             margin: 20px auto;
-            max-width: 600px;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 12px;
             background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
+
+        .post-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
         .post-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 10px;
         }
+
         .post-header h5 {
             margin: 0;
+            font-weight: 600;
         }
+
+        .post-header img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .post-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            margin: 10px 0;
+        }
+
         .post-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 15px;
         }
+
         .post-actions button {
-            border: none;
             background: transparent;
-            cursor: pointer;
+            border: none;
             font-size: 16px;
-            margin-right: 10px;
+            color: #007bff;
+            transition: color 0.3s ease;
+            cursor: pointer;
         }
+
+        .post-actions button:hover {
+            color: #0056b3;
+        }
+
         .likes-comments {
             font-size: 14px;
             color: #555;
             margin-bottom: 10px;
         }
+
+        /* Comment Section */
         .comment-section {
-            margin-top: 15px;
+            margin-top: 20px;
         }
+
         .comment {
-            margin-top: 10px;
             border-top: 1px solid #ddd;
             padding-top: 10px;
+            margin-top: 10px;
         }
+
         .comment p {
             margin: 0;
             padding: 5px 0;
+            color: #333;
         }
+
         .comment-meta {
             font-size: 12px;
-            color: #666;
+            color: #777;
         }
+
         .comment-content {
             font-weight: bold;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .post-container {
+                padding: 15px;
+            }
+
+            .post-header h5 {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -76,10 +129,16 @@
         @foreach ($posts as $post)
         <div class="post-container">
             <div class="post-header">
-                <h5>{{$post->user->prenom}}</h5>
+                <div class="d-flex align-items-center">
+                    <img src="{{ $post->user->photo ? asset('storage/' . $post->user->photo) : asset('images/default-profile-pic.jpg') }}" alt="{{ $post->user->prenom }}'s profile">
+                    <a href="{{ route('profile', $post->user->id) }}" class="text-dark text-decoration-none">
+                        <h5>{{ $post->user->prenom }}</h5>
+                    </a>
+                </div>
                 <small>{{ $post->created_at->diffForHumans() }}</small>
             </div>
-            <p>{{ $post->texte }}</p>
+
+            <p class="post-text">{{ $post->texte }}</p>
 
             <div class="likes-comments">
                 <span>{{ $post->likes->count() }} ❤️</span>
@@ -90,15 +149,15 @@
                 @if(!$post->likes->contains('user_id', auth()->user()->id))
                     <form action="{{route('like', $post->id)}}" method="post">
                         @csrf
-                        <button class="btn btn-link" type="submit">J'aime</button>
+                        <button type="submit">J'aime</button>
                     </form>
                 @else
                     <form action="{{route('unlike', $post->id)}}" method="post">
                         @csrf
-                        <button class="btn btn-link" type="submit">Je n'aime plus</button>
+                        <button type="submit">Je n'aime plus</button>
                     </form>
                 @endif
-                <button class="btn btn-link" data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>
+                <button data-toggle="collapse" data-target="#commentSection{{ $post->id }}">💬 Commenter</button>
             </div>
 
             <div id="commentSection{{ $post->id }}" class="collapse comment-section">

@@ -67,6 +67,18 @@
             background-color: #0056b3;
         }
 
+        .btn-follow {
+            background-color: #007bff;
+            color: white;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-weight: 600;
+        }
+
+        .btn-follow:hover {
+            background-color: #0056b3;
+        }
+
         .profile-info {
             display: flex;
             justify-content: space-between;
@@ -157,26 +169,6 @@
             color: #0056b3;
         }
 
-        .comment-section {
-            margin-top: 10px;
-        }
-
-        .comment {
-            margin-top: 5px;
-            padding: 5px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .comment-meta {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .comment-content {
-            font-weight: bold;
-        }
-
         /* Media queries */
         @media (max-width: 991px) {
             .post-card {
@@ -207,38 +199,52 @@
     @include('layouts.navbar')
 
     <div class="container">
-
         <header class="profile-header">
             <div>
-                <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('images/default-profile-pic.jpg') }}" alt="Photo de Profil">
+                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-profile-pic.jpg') }}" alt="Photo de Profil">
             </div>
             <div class="info">
-                <h1>{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</h1>
-                <p>{{"@". Auth::user()->username }}</p>
-                <p><strong>{{ Auth::user()->followers->count() }}</strong> abonnés | <strong>{{ Auth::user()->following->count() }}</strong> abonnements</p>
-                <a href="{{ route('edit') }}" class="btn btn-edit">Modifier le Profil</a>
+                <h1>{{ $user->prenom }} {{ $user->nom }}</h1>
+                <p>{{"@". $user->username }}</p>
+                <p><strong>{{ $user->followers->count() }}</strong> abonnés | <strong>{{ $user->following->count() }}</strong> abonnements</p>
+
+                @if(auth()->user()->id === $user->id)
+                    <a href="{{ route('edit') }}" class="btn btn-edit">Modifier le Profil</a>
+                @else
+                    @if(Auth::user()->following->contains($user->id))
+                        <form action="{{ route('unfollow', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-follow">Se Désabonner</button>
+                        </form>
+                    @else
+                        <form action="{{ route('follow', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-follow">Suivre</button>
+                        </form>
+                    @endif
+                @endif
             </div>
         </header>
 
         <section class="profile-info">
             <div class="stat">
-                <h3>{{ Auth::user()->publications->count() }}</h3>
+                <h3>{{ $user->publications->count() }}</h3>
                 <p>Publications</p>
             </div>
             <div class="stat">
-                <h3>{{ Auth::user()->followers->count() }}</h3>
+                <h3>{{ $user->followers->count() }}</h3>
                 <p>Abonnés</p>
             </div>
             <div class="stat">
-                <h3>{{ Auth::user()->following->count() }}</h3>
+                <h3>{{ $user->following->count() }}</h3>
                 <p>Abonnements</p>
             </div>
         </section>
 
         <section class="posts">
-            <h2>Mes Publications</h2>
-            @if(auth::user()->publications)
-                @foreach(auth::user()->publications as $post)
+            <h2>Publications de {{ $user->prenom }}</h2>
+            @if($user->publications->count() > 0)
+                @foreach($user->publications as $post)
                     <div class="post-card">
                         @if ($post->image)
                             <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image">
@@ -254,15 +260,13 @@
                     </div>
                 @endforeach
             @else
-                <p>Vous n'avez rien publié</p>
+                <p>{{ $user->prenom }} n'a encore rien publié.</p>
             @endif
         </section>
-
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

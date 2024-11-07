@@ -66,7 +66,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
-            <a href="{{ route('profile') }}" class="btn btn-secondary">Annuler</a>
+            <a href="{{ route('profile',auth()->user()->id) }}" class="btn btn-secondary">Annuler</a>
         </form>
     </div>
 

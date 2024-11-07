@@ -17,14 +17,10 @@ use App\Http\Controllers\PublicationController;
  Route::any('/results',[UserController::class,'search'])->name('search')->middleware('auth');
  Route::post('/follow/{user}',[FollowController::class,'follow'])->name('follow')->middleware('auth');
  Route::post('/unfollow/{user}',[FollowController::class,'unfollow'])->name('unfollow')->middleware('auth');
- Route::any('/profile',[UserController::class,'profile'])->name('profile')->middleware('auth');
+ Route::any('/profile/{id}',[UserController::class,'profile'])->name('profile')->middleware('auth');
  Route::any('/edit',[UserController::class,'edit'])->name('edit')->middleware('auth');
  Route::any('/edit_password',[UserController::class,'edit_password'])->name('edit_password')->middleware('auth');
  Route::any('/publication',[PublicationController::class,'publication'])->name('publication')->middleware('auth');
  Route::any('/like/{id}',[LikeController::class,'like'])->name('like')->middleware('auth');
  Route::any('/unlike/{id}',[LikeController::class,'unlike'])->name('unlike')->middleware('auth');
  Route::any('/comment/{id}',[CommentaireController::class,'comments'])->name('comments')->middleware('auth');
-
-
-
-

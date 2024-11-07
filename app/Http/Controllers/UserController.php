@@ -75,8 +75,9 @@ class UserController extends Controller
         return view('Results',compact('users'));
     }
 
-    public function profile(){
-        return view('profile');
+    public function profile($id){
+        $user = User::findorfail($id);
+        return view('profile', compact("user"));
     }
     public function stats()
     {
