@@ -1,4 +1,4 @@
-
+<style>
     header {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
@@ -18,9 +18,9 @@
     }
 </style>
 <div class="header">
-    <h1>Bienvenue sur Mon Réseau Social</h1>
+    <h1>Link-Up</h1>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/">MonRéseau</a>
+        <a class="navbar-brand" href="/">Link-Up</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

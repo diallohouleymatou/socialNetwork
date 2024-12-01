@@ -32,7 +32,7 @@ class UserController extends Controller
                 $user->nom = $requestValide['nom'];
                 $user->email = $requestValide['email'];
                 $user->password = Hash::make($requestValide['password']);
-                $user->bio ="hey I am using Breeze";
+                $user->bio ="hey I am using Link-Up";
                 $user->save();
                 return redirect ('/login')->with('success','Inscription reussie');
             }

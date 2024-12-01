@@ -91,7 +91,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Profil</h5>
                         <p class="card-text">Voir votre profil</p>
-                        <a href="{{route('profile')}}" class="btn btn-primary">Profil</a>
+                        <a href="{{route('profile',auth()->user()->id)}}" class="btn btn-primary">Profil</a>
                     </div>
                 </div>
             </div>
