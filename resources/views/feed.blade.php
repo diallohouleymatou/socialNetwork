@@ -173,7 +173,7 @@
                 <div class="comment">
                     @foreach ($post->commentaires as $comment)
                         <div>
-                            <span class="comment-content">{{ $comment->user->prenom }}:</span>
+                            <span class="comment-content"><a href="{{Route('profile',$comment->user->id)}}">{{$comment->user->prenom }}:</a></span>
                             <p>{{ $comment->contenu }}</p>
                             <div class="comment-meta">{{ $comment->created_at->diffForHumans() }}</div>
                         </div>
