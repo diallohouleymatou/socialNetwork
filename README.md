@@ -1,11 +1,11 @@
 # **Projet de Réseau Social**
 
-Une plateforme de réseau social riche en fonctionnalités, développée avec le framework Laravel. Ce projet vise à offrir une plateforme permettant aux utilisateurs de se connecter, partager du contenu et interagir entre eux à travers une interface dynamique et conviviale.
+Une plateforme de réseau social développée avec le framework Laravel. Ce projet vise à offrir une plateforme permettant aux utilisateurs de se connecter, partager du contenu et interagir entre eux;
 
 ---
 
 ## **Table des Matières**
-1. [Aperçu du Projet](#aperçu-du-projet)
+1. [Introduction](#aperçu-du-projet)
 2. [Fonctionnalités](#fonctionnalités)
 3. [Installation](#installation)
 4. [Utilisation](#utilisation)
@@ -15,14 +15,14 @@ Une plateforme de réseau social riche en fonctionnalités, développée avec le
 
 ---
 
-### **Aperçu du Projet**
-Ce projet de réseau social permet aux utilisateurs de créer des profils, publier des posts, commenter, aimer et interagir avec les autres membres de la communauté. Conçu pour offrir une expérience utilisateur optimale, le projet met l'accent sur la performance, la sécurité et l'ergonomie.
+### **Introduction**
+réseau social permettant aux utilisateurs de créer des profils, publier des posts, commenter, aimer et interagir avec les autres membres de la communauté.
 
 ### **Fonctionnalités**
-- **Inscription et Connexion des Utilisateurs** : Enregistrement sécurisé avec gestion des mots de passe et validation par email.
+- **Inscription et Connexion des Utilisateurs** : Systeme de login complet.
 - **Profils Utilisateurs** : Modification de profil avec photo de profil, biographie, etc.
 - **Publication de Contenus** : Création, modification de posts.
-- **Interactions Sociales** : Système de likes, commentaires.
+- **Interactions Sociales** : likes, commentaires.
   
 ### **Installation**
 1. **Clonez le dépôt** :
@@ -57,8 +57,7 @@ Ce projet de réseau social permet aux utilisateurs de créer des profils, publi
    ```
 
 ### **Utilisation**
-Après avoir suivi les étapes d'installation, vous pouvez accéder à l'application en local via `http://127.0.0.1:8000`. Inscrivez-vous ou connectez-vous pour commencer à utiliser les fonctionnalités du réseau social.
-
+Après avoir suivi les étapes d'installation, vous pouvez accéder à l'application en local via `http://127.0.0.1:8000`.
 ### **Contribution**
 Les contributions sont les bienvenues ! Pour contribuer :
 1. Forkez le dépôt.
@@ -69,8 +68,8 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 ### **Technologies Utilisées**
 - **Backend** : Laravel
-- **Frontend** : Blade, Vue.js (ou un autre framework JS si utilisé)
-- **Base de Données** : MySQL (ou tout autre SGBD configuré)
+- **Frontend** : Blade
+- **Base de Données** : MySQL, SQLite, Postgres
 - **Outils de Développement** : Composer, NPM, Git
 
 ### **Auteurs**
