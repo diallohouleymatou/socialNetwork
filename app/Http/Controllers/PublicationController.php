@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PublicationController extends Controller
 {
-    //
     public function publication(Request $request){
         if($request->isMethod('post')){
             $requestValide = $request->validate([
